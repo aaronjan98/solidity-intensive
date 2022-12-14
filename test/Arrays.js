@@ -1,10 +1,8 @@
-const { expect } = require('chai');
-const { ethers } = require('hardhat');
+const { expect } = require('chai')
+const { ethers } = require('hardhat')
 
 describe('Arrays', () => {
-
   describe('Example 1', () => {
-
     it('demonstrates array initialization & types', async () => {
       const Contract = await ethers.getContractFactory('Arrays1')
       let contract = await Contract.deploy()
@@ -30,11 +28,22 @@ describe('Arrays', () => {
       expect(await contract.array6(0)).to.equal('')
       expect(await contract.array6(1)).to.equal('')
       expect(await contract.array6(9)).to.equal('')
+
+      expect(await contract.array7(0)).to.equal(false)
+      expect(await contract.array7(2)).to.equal(false)
+      expect(await contract.array7(4)).to.equal(false)
+
+      expect(await contract.array8(0)).to.equal(65536)
+      expect(await contract.array8(1)).to.equal(-20000)
+
+      expect(await contract.array9(0)).to.equal('0x')
+      expect(await contract.array10(9)).to.equal(
+        '0x0000000000000000000000000000000000000000'
+      )
     })
   })
 
   describe('Example 2', () => {
-
     it('demonstrates functions', async () => {
       const Contract = await ethers.getContractFactory('Arrays2')
       let contract = await Contract.deploy()
@@ -68,8 +77,6 @@ describe('Arrays', () => {
       await contract.remove(0)
       expect(await contract.length()).to.equal(2) // preserves length
       expect(await contract.array(0)).to.equal(0) // resets to default value
-
     })
   })
-
 })

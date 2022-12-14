@@ -1,10 +1,8 @@
-const { expect } = require('chai');
-const { ethers } = require('hardhat');
+const { expect } = require('chai')
+const { ethers } = require('hardhat')
 
 describe('Enums', () => {
-
   describe('Example 1', () => {
-
     it('demonstrates read / write / update behavior of enums', async () => {
       const Contract = await ethers.getContractFactory('Enums1')
       let contract = await Contract.deploy()
@@ -25,5 +23,4 @@ describe('Enums', () => {
       expect(await contract.get()).to.equal(0)
     })
   })
-
 })
