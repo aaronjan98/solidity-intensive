@@ -103,15 +103,13 @@ contract Variables6 {
 }
 
 contract testVisibility is Variables6 {
-    function testInheritance() public {
-        console.log(name3);
+    string public test1;
+    string public test3;
+    string public test4;
+
+    constructor() {
+        test1 = name1;
+        test3 = name3;
+        test4 = name4;
     }
 }
-
-// contract testVisibility {
-//     Variables6 testContract = new Variables6();
-
-//     function testInheritance() public {
-//         assert(testContract.name3() == 'Name3');
-//     }
-// }

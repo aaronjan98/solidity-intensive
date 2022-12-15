@@ -104,11 +104,10 @@ describe('Variables', () => {
       contract2 = await Contract2.deploy()
     })
 
-    it('demonstrates inheritance for all visibility types', async () => {
-      // expect(await contract2.name1()).to.be.reverted
-      // expect(await contract2.name2()).to.be.reverted
-      expect(await contract2.name3()).to.equal('Name 3')
-      expect(await contract2.name4()).to.equal('Name 4')
+    it('demonstrates inheritance for different visibility types', async () => {
+      expect(await contract2.test1()).to.equal('Name 1')
+      expect(await contract2.test3()).to.equal('Name 3')
+      expect(await contract2.test4()).to.equal('Name 4')
     })
   })
 })
