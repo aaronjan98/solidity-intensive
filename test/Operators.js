@@ -53,6 +53,24 @@ describe('Operators', () => {
       expect(await contract.ltOrEq(2, 1)).to.equal(false)
       expect(await contract.checkAddress()).to.equal(false)
     })
+
+    it('comparing other types', async () => {
+      const Contract = await ethers.getContractFactory('HomeworkOperators')
+      contract = await Contract.deploy()
+      expect(await contract.eqString('Test', 'Test')).to.equal(true)
+      expect(
+        await contract.eqAddress(
+          '0x690b9a9e9aa1c9db991c7721a92d351db4fac990',
+          '0x690b9a9e9aa1c9db991c7721a92d351db4fac990'
+        )
+      ).to.equal(true)
+      expect(
+        await contract.eqAddress(
+          '0x690b9a9e9aa1c9db991c7721a92d351db4fac990',
+          '0xe688b84b23f322a994a53dbf8e15fa82cdb71127'
+        )
+      ).to.equal(false)
+    })
   })
 
   describe('Example 3', () => {

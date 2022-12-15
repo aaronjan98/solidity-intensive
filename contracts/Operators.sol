@@ -118,6 +118,23 @@ contract Operators2 {
     }
 }
 
+contract HomeworkOperators {
+    function eqString(
+        string memory a,
+        string memory b
+    ) external pure returns (bool) {
+        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
+    }
+
+    function eqAddress(address a, address b) external pure returns (bool) {
+        return a == b;
+    }
+
+    function notEq(address a, address b) external pure returns (bool) {
+        return a != b;
+    }
+}
+
 // Locial Operators
 // Homework: try implementing more of these
 // E.g. try checkingn expression equality like 1 + 1 == 2
