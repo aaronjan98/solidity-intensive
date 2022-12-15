@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "hardhat/console.sol";
+import 'hardhat/console.sol';
 
 // https://docs.soliditylang.org/en/v0.8.16/contracts.html?highlight=inheritance#inheritance
 
@@ -12,17 +12,17 @@ contract Ownable {
         owner = msg.sender;
     }
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(msg.sender == owner, 'caller must be owner');
         _;
     }
 }
 
 contract Inheritance1 is Ownable {
-    string public name = "Example 1";
+    string public name = 'Example 1';
 
     // Constructor is inherited from parent
-    // Ownalbe modifier inherited from parent
+    // Ownable modifier inherited from parent
 
     function setName(string memory _name) public onlyOwner {
         name = _name;
@@ -41,7 +41,7 @@ contract Inheritance2 is Ownable, Payable {
     // Withdraws ether funds from the contract
     function withdraw() public onlyOwner {
         uint256 value = address(this).balance;
-        (bool sent, ) = owner.call{value: value}("");
+        (bool sent, ) = owner.call{ value: value }('');
         require(sent);
     }
 }
@@ -60,37 +60,36 @@ contract Inheritance3 is Token1 {
     uint public decimals;
 
     constructor() Token1(1000000 * (10 ** 18)) {
-        name = "My Token";
-        symbol = "MTK";
+        name = 'My Token';
+        symbol = 'MTK';
         decimals = 18;
     }
 }
 
 contract Token2 {
     uint public totalSupply;
-    string public name = "My Token";
-    string public symbol = "MTK";
+    string public name = 'My Token';
+    string public symbol = 'MTK';
     uint public decimals = 18;
 
-    mapping (address => uint) balances;
+    mapping(address => uint) balances;
 
     constructor(uint _totalSupply) {
         totalSupply = _totalSupply * (10 ** 18);
         balances[msg.sender] = totalSupply;
     }
 
-    function balanceOf(address _account) virtual public view returns(uint) {
+    function balanceOf(address _account) public view virtual returns (uint) {
         return balances[_account];
     }
 }
 
 contract Inheritance4 is Token2 {
+    constructor(uint _totalSupply) Token2(_totalSupply) {}
 
-    constructor(uint _totalSupply) Token2(_totalSupply) {
-
-    }
-
-    function balanceOf(address _account) virtual override public view returns(uint) {
+    function balanceOf(
+        address _account
+    ) public view virtual override returns (uint) {
         uint balance = super.balanceOf(_account);
         return balance * 10;
     }

@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "hardhat/console.sol";
+import 'hardhat/console.sol';
 
 // State variable with default value
 // Solidity will expose a "name()" function with public visibility
 contract Variables1 {
-    string public name = "Example 1";
+    string public name = 'Example 1';
 }
 
 // Constructor assigns state variable
@@ -31,7 +31,7 @@ contract Variables3 {
         name = _name;
     }
 
-    function getName() public view returns(string memory) {
+    function getName() public view returns (string memory) {
         return name;
     }
 }
@@ -39,18 +39,18 @@ contract Variables3 {
 // Constants are set in the contract
 // Immutable can be set in constructor, but should not change
 contract Variables4 {
-    string constant NAME = "Example 4";
+    string constant NAME = 'Example 4';
     address immutable OWNER;
 
     constructor() {
         OWNER = msg.sender;
     }
 
-    function name() public pure returns(string memory) {
+    function name() public pure returns (string memory) {
         return NAME;
     }
 
-    function owner() public view returns(address) {
+    function owner() public view returns (address) {
         return OWNER;
     }
 }
@@ -73,12 +73,8 @@ contract Variables5 {
         amount = msg.value;
     }
 
-    function getBlockInfo() public view returns(uint, uint, uint) {
-        return(
-            block.number,
-            block.timestamp,
-            block.chainid
-        );
+    function getBlockInfo() public view returns (uint, uint, uint) {
+        return (block.number, block.timestamp, block.chainid);
     }
 }
 
@@ -88,20 +84,34 @@ contract Variables5 {
 contract Variables6 {
     // No visibility
     // Defaults to internal
-    string name1 = "Name 1";
+    string name1 = 'Name 1';
     // Private variables can only be accessed inside the current contract
     // They *cannot* be accessed outside the conract
     // They *cannot* be accessed from another contract or inherited
     // Note: private variables are not truly private; anyone can decode the value
-    string private name2 = "Name 2";
+    string private name2 = 'Name 2';
     // Internal variables can only be accessed internally
     // They *cannot* be accessed outside the conract
     // They *cannot* be accessed from another contract
     // They *can* be inherited by another contract
-    string internal name3 = "Name 3";
+    string internal name3 = 'Name 3';
     // Public variables can be accessed internally and externally
     // They *can* be accessed outside the conract
     // They *can* be accessed from another contract
     // They *can* be inherited by another contract
-    string public name4 = "Name 4";
+    string public name4 = 'Name 4';
 }
+
+contract testVisibility is Variables6 {
+    function testInheritance() public {
+        console.log(name3);
+    }
+}
+
+// contract testVisibility {
+//     Variables6 testContract = new Variables6();
+
+//     function testInheritance() public {
+//         assert(testContract.name3() == 'Name3');
+//     }
+// }

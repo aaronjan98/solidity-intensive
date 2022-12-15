@@ -19,7 +19,6 @@ contract Arrays1 {
 }
 
 // Array functions
-// Homework: try manipulating more arrays & data types
 contract Arrays2 {
     uint[] public array;
 
@@ -39,6 +38,40 @@ contract Arrays2 {
 
     // Adds new value at the end of the array
     function push(uint i) public {
+        array.push(i);
+    }
+
+    // Removes last item from array
+    function pop() public {
+        array.pop();
+    }
+
+    // Remove item at given index
+    function remove(uint index) public {
+        delete array[index];
+    }
+}
+
+// manipulate more arrays & data types
+contract Arrays3 {
+    address[] public array;
+
+    // Get value at a given index
+    function get(uint i) public view returns (address) {
+        return array[i];
+    }
+
+    // Return the whole array
+    function getArray() public view returns (address[] memory) {
+        return array;
+    }
+
+    function length() public view returns (uint) {
+        return array.length;
+    }
+
+    // Adds new value at the end of the array
+    function push(address i) public {
         array.push(i);
     }
 

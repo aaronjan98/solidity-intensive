@@ -1,14 +1,13 @@
-const { expect } = require('chai');
-const { ethers } = require('hardhat');
+const { expect } = require('chai')
+const { ethers } = require('hardhat')
 
-const tokens = (n) => {
+const tokens = n => {
   return ethers.utils.parseUnits(n.toString(), 'ether')
 }
 
 const ether = tokens
 
 describe('Variables', () => {
-
   describe('Example 1', () => {
     it('it has a state variable with a default value', async () => {
       const Contract = await ethers.getContractFactory('Variables1')
@@ -64,7 +63,6 @@ describe('Variables', () => {
       let accounts = await ethers.getSigners()
       expect(await contract.owner()).to.equal(accounts[0].address)
     })
-
   })
 
   describe('Example 5', () => {
@@ -91,6 +89,26 @@ describe('Variables', () => {
       let result = await contract.getBlockInfo()
       // Uncomment this to view return values in console
       // console.log(result)
+    })
+  })
+
+  describe('Homework', () => {
+    let contract
+
+    beforeEach(async () => {
+      const Contract = await ethers.getContractFactory('Variables6')
+      contract = await Contract.deploy()
+
+      // initiate external contract to show it doesn't have access to internal variable
+      const Contract2 = await ethers.getContractFactory('testVisibility')
+      contract2 = await Contract2.deploy()
+    })
+
+    it('demonstrates inheritance for all visibility types', async () => {
+      // expect(await contract2.name1()).to.be.reverted
+      // expect(await contract2.name2()).to.be.reverted
+      expect(await contract2.name3()).to.equal('Name 3')
+      expect(await contract2.name4()).to.equal('Name 4')
     })
   })
 })
