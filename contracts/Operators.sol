@@ -118,7 +118,7 @@ contract Operators2 {
     }
 }
 
-contract HomeworkOperators {
+contract HomeworkComparisonOperators {
     function eqString(
         string memory a,
         string memory b
@@ -135,9 +135,9 @@ contract HomeworkOperators {
     }
 }
 
-// Locial Operators
+// Logical Operators
 // Homework: try implementing more of these
-// E.g. try checkingn expression equality like 1 + 1 == 2
+// E.g. try checking expression equality like 1 + 1 == 2
 contract Operators3 {
     function and(bool a, bool b) external pure returns (bool) {
         return a && b;
@@ -153,5 +153,18 @@ contract Operators3 {
 
     function comparisonExample() external pure returns (bool) {
         return (1 + 1 == 2) && (2 + 2 == 4);
+    }
+}
+
+contract HwLogicalOperators {
+    function and(uint a, uint b) external pure returns (bool) {
+        return (a + a == 0) && (b - b == 0);
+    }
+
+    function or(string memory a, string memory b) external pure returns (bool) {
+        return
+            keccak256(abi.encodePacked(a)) ==
+            keccak256(abi.encodePacked('test')) ||
+            keccak256(abi.encodePacked(b)) == keccak256(abi.encodePacked('hw'));
     }
 }

@@ -55,7 +55,9 @@ describe('Operators', () => {
     })
 
     it('comparing other types', async () => {
-      const Contract = await ethers.getContractFactory('HomeworkOperators')
+      const Contract = await ethers.getContractFactory(
+        'HomeworkComparisonOperators'
+      )
       contract = await Contract.deploy()
       expect(await contract.eqString('Test', 'Test')).to.equal(true)
       expect(
@@ -86,6 +88,13 @@ describe('Operators', () => {
       expect(await contract.not(true)).to.equal(false)
       expect(await contract.not(false)).to.equal(true)
       expect(await contract.comparisonExample()).to.equal(true)
+    })
+
+    it('demonstrates logical operators with other types', async () => {
+      const Contract = await ethers.getContractFactory('HwLogicalOperators')
+      contract = await Contract.deploy()
+      expect(await contract.and(0, 5)).to.equal(true)
+      expect(await contract.or('test', 'hw')).to.equal(true)
     })
   })
 })
