@@ -1,8 +1,7 @@
-const { expect } = require('chai');
-const { ethers } = require('hardhat');
+const { expect } = require('chai')
+const { ethers } = require('hardhat')
 
 describe('Events', () => {
-
   describe('Example 1', () => {
     let user1, user2
 
@@ -17,16 +16,17 @@ describe('Events', () => {
       let contract = await Contract.deploy()
 
       // Call it once, check the event log in real time
-      let transaction = await contract.updateMessage('Hey!')
+      let transaction = await contract.connect(user1).updateMessage('Hey!')
       await transaction.wait()
-      await expect(transaction).to.emit(contract, 'MessageUpdated')
+      await expect(transaction)
+        .to.emit(contract, 'MessageUpdated')
         .withArgs(user1.address, 'Hey!')
 
       // Call it a few more times to get event history
-      transaction = await contract.updateMessage('Ho!')
+      transaction = await contract.connect(user1).updateMessage('Ho!')
       await transaction.wait()
 
-      transaction = await contract.updateMessage('Ha!')
+      transaction = await contract.connect(user1).updateMessage('Ha!')
       await transaction.wait()
 
       // Get all past events
@@ -37,8 +37,16 @@ describe('Events', () => {
       // Check first event in the stream
       // Homework: check other values and other events
       let firstEvent = eventStream[0]
+      expect(firstEvent.args[0]).to.equal(user1.address)
       expect(firstEvent.args[1]).to.equal('Hey!')
 
+      let secondEvent = eventStream[1]
+      expect(secondEvent.args[0]).to.equal(user1.address)
+      expect(secondEvent.args[1]).to.equal('Ho!')
+
+      let thirdEvent = eventStream[2]
+      expect(thirdEvent.args[0]).to.equal(user1.address)
+      expect(thirdEvent.args[1]).to.equal('Ha!')
 
       // Trigger event from user 2
       transaction = await contract.connect(user2).updateMessage('Huh!')
@@ -52,9 +60,8 @@ describe('Events', () => {
       // Make sure it's user 2's message
       // Homework: check other parameters
       firstEvent = eventStream[0]
+      expect(firstEvent.args[0]).to.equal(user2.address)
       expect(firstEvent.args[1]).to.equal('Huh!')
-
     })
   })
-
 })
